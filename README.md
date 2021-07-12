@@ -12,11 +12,12 @@
 3. JGB37-520B Motor
 
 ### 1.3 Startup Procedures
-1. roslaunch virtualrobot gazebo.launch: This file will simulate the game_field and the robot
-2. rosrun rosserial_python serial_node.py /dev/ttyACM0: This file will connect the real world robot and allow them synchronized
-3. rosrun virtualrobot control_WithEnodeValue.py: This file will control the real world robot movement such as forward and backward
-4. rosrun virtualrobotv2 Encoder_to_odom_with_negative.py: This file will translate the encoder value to odometry message
-5. rosrun virtualrobotv2 Encoder_to_odom_back_to_origin.py: This file allow to put the simulated car into the original position
+1. Use Arduino IDE to upload control_WithEncode_new.ino to Arduino Mega: This file will provide the encoder value and allow user to change PWM via keyboard
+2. roslaunch virtualrobot gazebo.launch: This file will simulate the game_field and the robot
+3. rosrun rosserial_python serial_node.py /dev/ttyACM0: This file will connect the real world robot and allow them synchronized
+4. rosrun virtualrobot control_WithEnodeValue.py: This file will control the real world robot movement such as forward and backward
+5. rosrun virtualrobotv2 Encoder_to_odom_with_negative.py: This file will translate the encoder value to odometry message
+6. rosrun virtualrobotv2 Encoder_to_odom_back_to_origin.py: This file allow to put the simulated car into the original position
 
 ### 2.1 Program Explaination
 ### 2.1.1 Gazebo.launch
@@ -102,15 +103,18 @@ Enter a choice:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_power_supply_setup.jpeg)
 
 ### 3 Encountered Problem solution
-### 3.1.1 ROS problem
+### 3.1.1 ROS problem 1
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ROS_problem1.png)
 * First, Please make sure that you have put the file in correct directory or it just a typo mistake
 * Second, type `source ~/catkin_ws/devel/setup.bash` in command line
 * Third, type `catkin_make` in ~/catkin_ws directory
+### 3.1.2 ROS problem 2
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ROS_problem2.png)
 * First, open a new command line and type `roscore`
 * Second, open a new command line again and type `roslaunch virtualrobotv2 gazebo.launch`
 * Third, open these files again and the problem should be solved
-![image]()
-
-
+### 3.1.3 Arduino problem
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/Arduino_problem.png)
+* First, check whether you have turn on any ROS program such as rosrun rosserial_python serial_node.py /dev/ttyACM0
+* Second, upload Arduino program again while closed all the ROS program
+* Remeber! ROS and Arduino cannot run both at the same time. Please make sure that turn off another when you want to upload or open program
