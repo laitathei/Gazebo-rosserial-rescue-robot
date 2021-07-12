@@ -20,6 +20,7 @@
 
 ### 2.1 Program Explaination
 ### 2.1.1 Gazebo.launch
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_game_field.png)
 * `<?xml version="1.0" encoding="UTF-8"?>`Specify that it is an XML file
 * `<launch>...</launch>`Specify that it is an launch file and all the code should be inside this tag
 * `<arg name = "xxx" default= "xxx"/>`Similiar with C++ to define variable name and the value
@@ -28,11 +29,13 @@
 * `<node name = "xxx".../>`Node can import ROS package and use it in the launch file
 
 ### 2.1.2 serial_node.py
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_rosserial.png)
 * Allow the microcontroller to communicate with other electronic devices
 * Every port will allocate with special port number
 * While type the correct port name /xxx/xxxxx, the program connect the device
 
 ### 2.1.3 control_WithEnodeValue.py
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_control_WithEnodeValue.png)
 ```XML
 x_step = -0.05
 left_step_larger = 0.4
@@ -67,6 +70,7 @@ right_step_larger = -0.4
 * Change the letter inside`if(key.char=='?')` can change the control button position
 
 ### 2.1.4 Encoder_to_odom_with_negative.py
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_Encoder_to_odom.png)
 ```XML
 self.encoder_one_rotation = 1854.0
 self.wheel_length = 19.0 # in cm
@@ -82,6 +86,7 @@ self.compensated_parameter = 0.23
 * Therefore, the simulated robot will always changing its position to reach the final position instead of driving the wheel
 
 ### 2.1.5 Encoder_to_odom_back_to_origin.py
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_back_to_origin.png)
 ```XML
 Please choose your robot motion
 Please place the cursor to this window before refresh the car position!
