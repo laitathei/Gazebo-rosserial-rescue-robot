@@ -98,8 +98,8 @@ Enter a choice:
 * When typing 1 into the command line, the simulated robot will back to the original position
 * When typing 2 into the command line, it will leave the program
 
-
-
+### 2.2 Power supply setup
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_power_supply_setup.jpeg)
 
 
 
