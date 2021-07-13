@@ -108,11 +108,13 @@ Enter a choice:
 * First, Please make sure that you have put the file in correct directory or it just a typo mistake
 * Second, type `source ~/catkin_ws/devel/setup.bash` in command line
 * Third, type `catkin_make` in ~/catkin_ws directory
+
 ### 3.1.2 ROS problem 2
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ROS_problem2.png)
 * First, open a new command line and type `roscore`
 * Second, open a new command line again and type `roslaunch virtualrobotv2 gazebo.launch`
 * Third, open these files again and the problem should be solved
+
 ### 3.1.3 Arduino problem
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/Arduino_problem.png)
 * First, check whether you have turn on any ROS program such as rosrun rosserial_python serial_node.py /dev/ttyACM0
