@@ -1108,30 +1108,30 @@ if __name__ == "__main__":
                 print (odom.quadrant)
                 print "leave_origin :"
                 print (odom.leave_origin)
-                print "positive_quadrant1_origin :"
-                print (odom.positive_quadrant1_origin)
-                print "negative_quadrant1_origin :"
-                print (odom.negative_quadrant1_origin)
-                print "positive_quadrant2_origin :"
-                print (odom.positive_quadrant2_origin)
-                print "negative_quadrant2_origin :"
-                print (odom.negative_quadrant2_origin)
-                print "positive_quadrant3_origin :"
-                print (odom.positive_quadrant3_origin)
-                print "negative_quadrant3_origin :"
-                print (odom.negative_quadrant3_origin)
-                print "positive_quadrant4_origin :"
-                print (odom.positive_quadrant4_origin)
-                print "negative_quadrant4_origin :"
-                print (odom.negative_quadrant4_origin)
-                print "positive_x_origin :"
-                print (odom.positive_x_origin)
-                print "positive_y_origin :"
-                print (odom.positive_y_origin)
-                print "negative_x_origin :"
-                print (odom.negative_x_origin)
-                print "negative_y_origin :"
-                print (odom.negative_y_origin)
+                #print "positive_quadrant1_origin :"
+                #print (odom.positive_quadrant1_origin)
+                #print "negative_quadrant1_origin :"
+                #print (odom.negative_quadrant1_origin)
+                #print "positive_quadrant2_origin :"
+                #print (odom.positive_quadrant2_origin)
+                #print "negative_quadrant2_origin :"
+                #print (odom.negative_quadrant2_origin)
+                #print "positive_quadrant3_origin :"
+                #print (odom.positive_quadrant3_origin)
+                #print "negative_quadrant3_origin :"
+                #print (odom.negative_quadrant3_origin)
+                #print "positive_quadrant4_origin :"
+                #print (odom.positive_quadrant4_origin)
+                #print "negative_quadrant4_origin :"
+                #print (odom.negative_quadrant4_origin)
+                #print "positive_x_origin :"
+                #print (odom.positive_x_origin)
+                #print "positive_y_origin :"
+                #print (odom.positive_y_origin)
+                #print "negative_x_origin :"
+                #print (odom.negative_x_origin)
+                #print "negative_y_origin :"
+                #print (odom.negative_y_origin)
                 print "facing_forward :"
                 print (odom.facing_forward)
                 print "facing_backward :"
