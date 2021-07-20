@@ -5,8 +5,8 @@
   <xacro:property name="cameraSize" value="0.05"/>
   <xacro:property name="cameraMass" value="0.1"/>
 
-  <xacro:include filename="$(find virtualrobot)/urdf/robot_plugin.xacro" />
-  <xacro:include filename="$(find virtualrobot)/urdf/materials.xacro" />
+  <xacro:include filename="$(find virtualrobotv2)/urdf/robot_plugin.xacro" />
+  <xacro:include filename="$(find virtualrobotv2)/urdf/materials.xacro" />
 
   <link name="base_footprint">
    <visual>
