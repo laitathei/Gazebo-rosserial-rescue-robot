@@ -120,6 +120,7 @@ Enter a choice:
 
 ### 2.4 Logical graph
 [image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/logical_graph.png)
+
 ### 3 Encountered Problem solution
 ### 3.1.1 ROS problem 1
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ROS_problem1.png)
