@@ -119,7 +119,7 @@ Enter a choice:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/rqt_graph.png)
 
 ### 2.4 Logical graph
-[image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/logical_graph.png)
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/logical_graph.png)
 
 ### 3 Encountered Problem solution
 ### 3.1.1 ROS problem 1
