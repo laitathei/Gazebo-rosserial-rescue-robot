@@ -1,0 +1,26 @@
+<annotation>
+	<folder>test</folder>
+	<filename>testing_right_131.jpg</filename>
+	<path>C:\Users\k6611\Desktop\FYP\LabelImg\dataset (intern)\turn_right\test\testing_right_131.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>920</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>turn_right</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>367</xmin>
+			<ymin>137</ymin>
+			<xmax>551</xmax>
+			<ymax>360</ymax>
+		</bndbox>
+	</object>
+</annotation>
