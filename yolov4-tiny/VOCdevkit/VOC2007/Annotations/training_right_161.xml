@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>training_right_161.jpg</filename>
+	<path>C:\Users\k6611\Desktop\FYP\LabelImg\dataset (intern)\turn_right\train\training_right_161.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>920</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>turn_right</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>414</xmin>
+			<ymin>224</ymin>
+			<xmax>513</xmax>
+			<ymax>338</ymax>
+		</bndbox>
+	</object>
+</annotation>
