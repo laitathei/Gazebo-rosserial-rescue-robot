@@ -47,7 +47,7 @@ Type ```git clone https://github.com/laitathei/Gazebo-rosserial-rescue-robot``` 
 * The XML files will mix up with JPEG files in the same directory. Please seperate into two holder which are Annotations and JPEGImages. 
 * Annotations will store the XML files and JPEGImages will store the JPEG file
 * For the tutorial of using labelImg, please refer to https://github.com/tzutalin/labelImg
-* 
+
 ### 3.2 Generate train.txt file with bounding box XY coordinate
 Before running the python script, please change the path with your own path
 1. Using ```voc2yolov4.py``` to shuffle the dataset into different data such as train, test, validation
@@ -82,3 +82,46 @@ In train.py, you can change:
 * batch_size
 * Init_Epoch
 * Freeze_Epoch
+
+### 3.4 Training
+* Type ```python2.7 train.py``` in command line
+* The validation loss and total loss will shown on the command line
+* Also, the final model will also shown the validation loss and total loss
+
+### 4 YOLO Deployment
+### 4.1 Get the class label
+Class label have the constant order which means the class label generated from detection also have constant order
+```
+        if len(top_conf) == 1:
+            if top_label[0] == 1: # turn right detected
+                turn_right = True
+                turn_left = False
+                top_conf=[top_conf[0]] # get the mark
+                boxes=[boxes[0]]
+            if top_label[0] == 0: # turn left detected
+                turn_left = True
+                turn_right = False
+                top_conf=[top_conf[0]] # get the mark
+                boxes=[boxes[0]]
+
+        elif len(top_conf) == 2:    # more than one object is detected
+            #compare two object score
+            if top_conf[0] > top_conf[1]:    # left score larger than right score
+                top_conf=[top_conf[0]]
+                top_label=[top_label[0]]
+                boxes=[boxes[0]]
+                turn_left = True
+                turn_right = False
+                print ("{} is detected : {}".format("turn_left",top_conf))
+
+            elif top_conf[1] > top_conf[0]:    # right score larger than left score
+                top_conf=[top_conf[1]]
+                top_label=[top_label[1]]
+                boxes=[boxes[1]]
+                turn_right = True
+                turn_left = False
+                print ("{} is detected : {}".format("turn_right",top_conf))
+```
+Base on this two class example ```in yolo.py```, more than two class can be develop
+### 4.2 Get the confidence levels or scores
+### 4.3 Get the boundary boxes coordinates
