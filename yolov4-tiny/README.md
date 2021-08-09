@@ -7,10 +7,12 @@ Type ```ifconifg``` in command line for both master and slave host
 ### 1.2 Change the bashrc file configuration
 Open new terminal and type ```sudo gedit .bashrc```in command line to open bashrc file
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/open_bashrc.png)
+
 Demo picture for slave bashrc file:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/slaver_bashrc.png)
 * Add/Change the ROS_MASTER_URI with slave IP address such as```http://192.168.x.x:11311```
 * Add/Change the ROS_IP with slave IP address such as ```ROS_IP=192.168.x.x```
+
 Demo picture for master bashrc file:
 ![image]()
 * 
@@ -19,10 +21,12 @@ Demo picture for master bashrc file:
 ### 1.3 Change the host file configuration
 Open new terminal and type following command to change host file setting
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/open_hosts.png)
+
 Demo picture for slave host file:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/slaver_host.png)
 * Add/Change the slave IP address with slave host name such as ```192.168.x.x    slave_host_name```
 * Add/Change the master IP address with master host name such as ```192.168.x.x    master_host_name```
+
 Demo picture for master host file:
 ![image]()
 * 
