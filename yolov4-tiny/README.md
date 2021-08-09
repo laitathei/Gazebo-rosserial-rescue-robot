@@ -50,3 +50,20 @@ Type ```git clone https://github.com/laitathei/Gazebo-rosserial-rescue-robot``` 
 ### 3.2 Generate train.txt file with bounding box XY coordinate
 1. Using ```voc2yolov4.py``` to shuffle the dataset into different data such as train, test, validation
 2. Using ```voc_annotation.py``` to generate text file with with bounding box XY coordinate base on ImageSets text file information
+
+The final dataset structure:
+```
+workspace
+          --VOCdevkit
+                      --VOC2007
+                                --Annotations
+                                --ImageSets
+                                            --Main
+                                                   --test.txt
+                                                   --train.txt
+                                                   --trainval.txt
+                                                   --val.txt
+                                                   
+                                --JPEGImages
+```
+### 3.3 Config hyperparameters (optional)
