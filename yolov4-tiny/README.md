@@ -10,13 +10,13 @@ Open new terminal and type ```sudo gedit .bashrc```in command line to open bashr
 
 Demo picture for slave bashrc file:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/slaver_bashrc.png)
-* Add/Change the ROS_MASTER_URI with slave IP address such as```http://192.168.x.x:11311```
-* Add/Change the ROS_IP with slave IP address such as ```ROS_IP=192.168.x.x```
+* Add/Change the ROS_MASTER_URI with slave IP address such as```http://192.168.1.1:11311```
+* Add/Change the ROS_IP with master IP address such as ```ROS_IP=192.168.1.2```
 
 Demo picture for master bashrc file:
-![image]()
-* 
-* 
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/master_bashrc.png)
+* Add/Change the ROS_MASTER_URI with master IP address such as```http://192.168.1.1:11311```
+* Add/Change the ROS_IP with master IP address such as ```ROS_IP=192.168.1.1```
 
 ### 1.3 Change the host file configuration
 Open new terminal and type following command to change host file setting
@@ -24,13 +24,13 @@ Open new terminal and type following command to change host file setting
 
 Demo picture for slave host file:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/slaver_host.png)
-* Add/Change the slave IP address with slave host name such as ```192.168.x.x    slave_host_name```
-* Add/Change the master IP address with master host name such as ```192.168.x.x    master_host_name```
+* Add/Change the slave IP address with slave host name such as ```192.168.1.1    slave_host_name```
+* Add/Change the master IP address with master host name such as ```192.168.1.2    master_host_name```
 
 Demo picture for master host file:
-![image]()
-* 
-* 
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/master_host.png)
+* Add/Change the master IP address with master host name such as ```192.168.1.2    master_host_name```
+* Add/Change the slave IP address with slave host name such as ```192.168.1.1    slave_host_name```
 
 ### 1.4 Connect master and slave host with Lan connection
 
