@@ -89,39 +89,68 @@ In train.py, you can change:
 * Also, the final model will also shown the validation loss and total loss
 
 ### 4 YOLO Deployment
-### 4.1 Get the class label
+### 4.1 Get the class label, scores and boundary boxes coordinates
 Class label have the constant order which means the class label generated from detection also have constant order
 ```
+        global turn_left
+        global turn_right
+        global detection_score
+        global detection_top_ymin
+        global detection_top_xmin
+        global detection_top_ymax
+        global detection_top_xmax
+        ......
         if len(top_conf) == 1:
             if top_label[0] == 1: # turn right detected
                 turn_right = True
                 turn_left = False
-                top_conf=[top_conf[0]] # get the mark
-                boxes=[boxes[0]]
+                detection_score=[top_conf[0]] # get the mark
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
+
             if top_label[0] == 0: # turn left detected
                 turn_left = True
                 turn_right = False
-                top_conf=[top_conf[0]] # get the mark
-                boxes=[boxes[0]]
+                detection_score=[top_conf[0]] # get the mark
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
 
         elif len(top_conf) == 2:    # more than one object is detected
             #compare two object score
             if top_conf[0] > top_conf[1]:    # left score larger than right score
-                top_conf=[top_conf[0]]
+                detection_score=[top_conf[0]]
                 top_label=[top_label[0]]
-                boxes=[boxes[0]]
                 turn_left = True
                 turn_right = False
-                print ("{} is detected : {}".format("turn_left",top_conf))
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
+                print ("{} is detected : {}".format("turn_left",score))
 
             elif top_conf[1] > top_conf[0]:    # right score larger than left score
-                top_conf=[top_conf[1]]
+                detection_score=[top_conf[1]]
                 top_label=[top_label[1]]
-                boxes=[boxes[1]]
                 turn_right = True
                 turn_left = False
-                print ("{} is detected : {}".format("turn_right",top_conf))
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
+            ......
+    def detection_result(self):
+        left=turn_left
+        right=turn_right
+        transfer_score=detection_score
+        transfer_top_ymin=detection_top_ymin
+        transfer_top_xmin=detection_top_xmin
+        transfer_top_ymax=detection_top_ymax
+        transfer_top_xmax=detection_top_xmax
+        return left, right,transfer_score,transfer_top_ymin,transfer_top_xmin,transfer_top_ymax,transfer_top_xmax
 ```
-Base on this two class example ```in yolo.py```, more than two class can be develop
-### 4.2 Get the confidence levels or scores
-### 4.3 Get the boundary boxes coordinates
+Base on this two class example ```in yolo.py```, more than two class can be further develop
+the detection_result function will store the required variable and just need to call it via ```yolo.detection_result```
