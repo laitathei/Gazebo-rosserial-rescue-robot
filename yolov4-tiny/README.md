@@ -64,7 +64,7 @@ Before running the python script, please change the path with your own path
 If you have more than one object have been labelled, please add it into voc_annotation.py `classes = ["xx", "xx"]`
 Also, add the class name into ```model_data/voc_classes.txt```with same order
 5. The output of the voc_annotation.py will become ```2007_test.txt```, ```2007_train.txt```, ```2007_val.txt``` file
-6. These three files will store in the same directory with voc_annotation.py
+6. These three files will store in the same directory with ```voc_annotation.py```
 The final dataset structure:
 ```
 --workspace
