@@ -1,4 +1,4 @@
-# coding=UTF-8
+
 import math
 
 import torch
@@ -6,7 +6,6 @@ import torch.nn as nn
 
 
 #-------------------------------------------------#
-#   卷积块
 #   Conv2d + BatchNorm2d + LeakyReLU
 #-------------------------------------------------#
 class BasicConv(nn.Module):
@@ -47,9 +46,9 @@ class BasicConv(nn.Module):
                  MaxPooling2D
 '''
 #---------------------------------------------------#
-#   CSPdarknet53-tiny的结构块
-#   存在一个大残差边
-#   这个大残差边绕过了很多的残差结构
+# CSPdarknet53-tiny structure block
+# There is a large residual edge
+# This large residual side bypasses a lot of residual structure
 #---------------------------------------------------#
 class Resblock_body(nn.Module):
     def __init__(self, in_channels, out_channels):
@@ -65,36 +64,36 @@ class Resblock_body(nn.Module):
         self.maxpool = nn.MaxPool2d([2,2],[2,2])
 
     def forward(self, x):
-        # 利用一个3x3卷积进行特征整合
+        # Use a 3x3 convolution for feature integration
         x = self.conv1(x)
-        # 引出一个大的残差边route
+        # Leads to a large residual edge route
         route = x
         
         c = self.out_channels
-        # 对特征层的通道进行分割，取第二部分作为主干部分。
+        # The channel of the feature layer is divided, and the second part is taken as the backbone part.
         x = torch.split(x, c//2, dim = 1)[1]
-        # 对主干部分进行3x3卷积
+        # Perform 3x3 convolution on the main part
         x = self.conv2(x)
-        # 引出一个小的残差边route_1
+        # Leads to a small residual edge route_1
         route1 = x
-        # 对第主干部分进行3x3卷积
+        # Perform 3x3 convolution on the backbone part
         x = self.conv3(x)
-        # 主干部分与残差部分进行相接
+        # The main part and the residual part are connected
         x = torch.cat([x,route1], dim = 1) 
 
-        # 对相接后的结果进行1x1卷积
+        # Perform 1x1 convolution on the concatenated result
         x = self.conv4(x)
         feat = x
         x = torch.cat([route, x], dim = 1)
         
-        # 利用最大池化进行高和宽的压缩
+        # Use maximum pooling for height and width compression
         x = self.maxpool(x)
         return x,feat
 
 class CSPDarkNet(nn.Module):
     def __init__(self):
         super(CSPDarkNet, self).__init__()
-        # 首先利用两次步长为2x2的3x3卷积进行高和宽的压缩
+        # First use two 3x3 convolutions with a step size of 2x2 to compress the height and width
         # 416,416,3 -> 208,208,32 -> 104,104,64
         self.conv1 = BasicConv(3, 32, kernel_size=3, stride=2)
         self.conv2 = BasicConv(32, 64, kernel_size=3, stride=2)
@@ -128,8 +127,8 @@ class CSPDarkNet(nn.Module):
         x, _    = self.resblock_body1(x)
         # 52,52,128 -> 26,26,256
         x, _    = self.resblock_body2(x)
-        # 26,26,256 -> x为13,13,512
-        #           -> feat1为26,26,256
+        # 26,26,256 -> x is 13,13,512
+        #           -> feat1 is 26,26,256
         x, feat1    = self.resblock_body3(x)
 
         # 13,13,512 -> 13,13,512
