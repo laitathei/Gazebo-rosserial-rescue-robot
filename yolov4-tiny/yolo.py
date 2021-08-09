@@ -1,6 +1,5 @@
-# coding=UTF-8
 #-------------------------------------#
-#       创建YOLO类
+#build the yolo class
 #-------------------------------------#
 import colorsys
 import os
@@ -19,10 +18,9 @@ from utils import (DecodeBox, letterbox_image, non_max_suppression, yolo_correct
 import rospy
 from std_msgs.msg import Int32
 #--------------------------------------------#
-#   使用自己训练好的模型预测需要修改3个参数
-#   model_path、classes_path和phi都需要修改！
-#   如果出现shape不匹配，一定要注意
-#   训练时的model_path、classes_path和phi参数的修改
+# Before using the custom model to perform prediction, it required to modify 3 parameter
+# model_path, classes_path and phi need to modify
+# if the shape is not match, please reminder the modification for model_path, classes_path and phi parameter
 #--------------------------------------------#
 class YOLO(object):
     _defaults = {
@@ -30,11 +28,11 @@ class YOLO(object):
         "anchors_path"      : 'model_data/yolo_anchors.txt',
         "classes_path"      : 'model_data/voc_classes.txt',
         #-------------------------------#
-        #   所使用的注意力机制的类型
-        #   phi = 0为不使用注意力机制
-        #   phi = 1为SE
-        #   phi = 2为CBAM
-        #   phi = 3为ECA
+        #    The attention type
+        #   phi = 0  means not using attention
+        #   phi = 1 for SE
+        #   phi = 2 for CBAM
+        #   phi = 3 for ECA
         #-------------------------------#
         "phi"               : 0,
         "model_image_size"  : (416, 416, 3),
@@ -42,8 +40,8 @@ class YOLO(object):
         "iou"               : 0.3, 
         "cuda"              : True,
         #---------------------------------------------------------------------#
-        #   该变量用于控制是否使用letterbox_image对输入图像进行不失真的resize，
-        #   在多次测试后，发现关闭letterbox_image直接resize的效果更好
+        #   letterbox image refer to whether using letterbox_image to resize the input image without distortion
+        #   after few trail, it founds that not using letterbox_image to resize the input image have better performance
         #---------------------------------------------------------------------#
         "letterbox_image"   : False,
     }
@@ -56,7 +54,7 @@ class YOLO(object):
             return "Unrecognized attribute name '" + n + "'"
 
     #---------------------------------------------------#
-    #   初始化YOLO
+    #  init the YOLO
     #---------------------------------------------------#
     def __init__(self, **kwargs):
         self.__dict__.update(self._defaults)
@@ -65,7 +63,7 @@ class YOLO(object):
         self.generate()
 
     #---------------------------------------------------#
-    #   获得所有的分类
+    #   get all the class
     #---------------------------------------------------#
     def _get_class(self):
         classes_path = os.path.expanduser(self.classes_path)
@@ -75,7 +73,7 @@ class YOLO(object):
         return class_names
     
     #---------------------------------------------------#
-    #   获得所有的先验框
+    #   get all the anchors
     #---------------------------------------------------#
     def _get_anchors(self):
         anchors_path = os.path.expanduser(self.anchors_path)
@@ -85,16 +83,16 @@ class YOLO(object):
         return np.array(anchors).reshape([-1, 3, 2])
 
     #---------------------------------------------------#
-    #   生成模型
+    #   generate the model
     #---------------------------------------------------#
     def generate(self):
         #---------------------------------------------------#
-        #   建立yolov4_tiny模型
+        #   build the yolov4-tiny model
         #---------------------------------------------------#
         self.net = YoloBody(len(self.anchors[0]), len(self.class_names), self.phi).eval()
 
         #---------------------------------------------------#
-        #   载入yolov4_tiny模型的权重
+        #   load the yolov4-tiny model weight
         #---------------------------------------------------#
         print('Loading weights into state dict...')
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -107,7 +105,7 @@ class YOLO(object):
             self.net = self.net.cuda()
     
         #---------------------------------------------------#
-        #   建立特征层解码用的工具
+        #   build the decodebox tool for feature layer
         #---------------------------------------------------#
         self.yolo_decodes = []
         self.anchors_mask = [[3,4,5],[1,2,3]]
@@ -115,7 +113,7 @@ class YOLO(object):
             self.yolo_decodes.append(DecodeBox(np.reshape(self.anchors,[-1,2])[self.anchors_mask[i]], len(self.class_names),  (self.model_image_size[1], self.model_image_size[0])))
 
         print('{} model, anchors, and classes loaded.'.format(self.model_path))
-        # 画框设置不同的颜色
+        # setup different colour for the bounding box
         hsv_tuples = [(x / len(self.class_names), 1., 1.)
                       for x in range(len(self.class_names))]
         self.colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
@@ -124,20 +122,25 @@ class YOLO(object):
                 self.colors))
     
     #---------------------------------------------------#
-    #   检测图片
+    #   detect the image
     #---------------------------------------------------#
     def detect_image(self, image):
         global turn_left
         global turn_right
+        global detection_score
+        global detection_top_ymin
+        global detection_top_xmin
+        global detection_top_ymax
+        global detection_top_xmax
         #---------------------------------------------------------#
-        #   在这里将图像转换成RGB图像，防止灰度图在预测时报错。
+        #  convert the image to RGB format to avoid the gray scale format cause error during detection
         #---------------------------------------------------------#
         image = image.convert('RGB')
 
         image_shape = np.array(np.shape(image)[0:2])
         #---------------------------------------------------------#
-        #   给图像增加灰条，实现不失真的resize
-        #   也可以直接resize进行识别
+        #    add gray bars to achieve undistorted resize
+        #    it can also directly resize and implement in classification
         #---------------------------------------------------------#
         if self.letterbox_image:
             crop_img = np.array(letterbox_image(image, (self.model_image_size[1],self.model_image_size[0])))
@@ -146,7 +149,7 @@ class YOLO(object):
         photo = np.array(crop_img,dtype = np.float32) / 255.0
         photo = np.transpose(photo, (2, 0, 1))
         #---------------------------------------------------------#
-        #   添加上batch_size维度
+        #    add the batch_size dimension
         #---------------------------------------------------------#
         images = [photo]
 
@@ -156,7 +159,7 @@ class YOLO(object):
                 images = images.cuda()
 
             #---------------------------------------------------------#
-            #   将图像输入网络当中进行预测！
+            #  load the image into the network to perform prediction
             #---------------------------------------------------------#
             outputs = self.net(images)
             output_list = []
@@ -164,7 +167,7 @@ class YOLO(object):
                 output_list.append(self.yolo_decodes[i](outputs[i]))
 
             #---------------------------------------------------------#
-            #   将预测框进行堆叠，然后进行非极大抑制
+            #  stack the predicted bounding box and perform non_max_suppression
             #---------------------------------------------------------#
             output = torch.cat(output_list, 1)
             batch_detections = non_max_suppression(output, len(self.class_names),
@@ -172,17 +175,22 @@ class YOLO(object):
                                                     nms_thres=self.iou)
         
             #---------------------------------------------------------#
-            #   如果没有检测出物体，返回原图
+            #    if no object detected, it will return the original image
             #---------------------------------------------------------#
             try:
                 batch_detections = batch_detections[0].cpu().numpy()
             except:
                 turn_right = False
                 turn_left = False
+                detection_score=0
+                detection_top_ymin=0
+                detection_top_xmin=0
+                detection_top_ymax=0
+                detection_top_xmax=0
                 return image
             
             #---------------------------------------------------------#
-            #   对预测框进行得分筛选
+            #  screening of prediction boxes score
             #---------------------------------------------------------#
             top_index = batch_detections[:,4] * batch_detections[:,5] > self.confidence
             top_conf = batch_detections[top_index,4]*batch_detections[top_index,5]
@@ -191,9 +199,9 @@ class YOLO(object):
             top_xmin, top_ymin, top_xmax, top_ymax = np.expand_dims(top_bboxes[:,0],-1),np.expand_dims(top_bboxes[:,1],-1),np.expand_dims(top_bboxes[:,2],-1),np.expand_dims(top_bboxes[:,3],-1)
 
             #-----------------------------------------------------------------#
-            #   在图像传入网络预测前会进行letterbox_image给图像周围添加灰条
-            #   因此生成的top_bboxes是相对于有灰条的图像的
-            #   我们需要对其进行修改，去除灰条的部分。
+            #    As letterbox_image parameter will ad the gray line before load the image into the network
+            #    therefore, the top_bboxes will included the gray line
+            #    it required to remove the gray line before having other process
             #-----------------------------------------------------------------#
             if self.letterbox_image:
                 boxes = yolo_correct_boxes(top_ymin,top_xmin,top_ymax,top_xmax,np.array([self.model_image_size[0],self.model_image_size[1]]),image_shape)
@@ -217,25 +225,44 @@ class YOLO(object):
             if top_label[0] == 1: # turn right detected
                 turn_right = True
                 turn_left = False
+                detection_score=[top_conf[0]] # get the mark
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
+
             if top_label[0] == 0: # turn left detected
                 turn_left = True
                 turn_right = False
+                detection_score=[top_conf[0]] # get the mark
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
 
         elif len(top_conf) == 2:    # more than one object is detected
             #compare two object score
             if top_conf[0] > top_conf[1]:    # left score larger than right score
-                top_conf=[top_conf[0]]
+                detection_score=[top_conf[0]]
                 top_label=[top_label[0]]
                 turn_left = True
                 turn_right = False
-                print ("{} is detected : {}".format("turn_left",top_conf))
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
+                print ("{} is detected : {}".format("turn_left",score))
 
             elif top_conf[1] > top_conf[0]:    # right score larger than left score
-                top_conf=[top_conf[1]]
+                detection_score=[top_conf[1]]
                 top_label=[top_label[1]]
                 turn_right = True
                 turn_left = False
-                print ("{} is detected : {}".format("turn_right",top_conf))
+                detection_top_ymin=[boxes[0][0]]
+                detection_top_xmin=[boxes[0][1]]
+                detection_top_ymax=[boxes[0][2]]
+                detection_top_xmax=[boxes[0][3]]
+                print ("{} is detected : {}".format("turn_right",score))
 
 
         for i, c in enumerate(top_label):
@@ -254,7 +281,7 @@ class YOLO(object):
             right = min(np.shape(image)[1], np.floor(right + 0.5).astype('int32'))
 
 
-            # 画框框
+            # draw the bounding box
             label = '{} :{:.2f}'.format(predicted_class, score)
             draw = ImageDraw.Draw(image)
             label_size = draw.textsize(label, font)
@@ -354,4 +381,9 @@ class YOLO(object):
     def detection_result(self):
         left=turn_left
         right=turn_right
-        return left, right
+        transfer_score=detection_score
+        transfer_top_ymin=detection_top_ymin
+        transfer_top_xmin=detection_top_xmin
+        transfer_top_ymax=detection_top_ymax
+        transfer_top_xmax=detection_top_xmax
+        return left, right,transfer_score,transfer_top_ymin,transfer_top_xmin,transfer_top_ymax,transfer_top_xmax
