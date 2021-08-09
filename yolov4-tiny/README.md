@@ -47,13 +47,17 @@ Type ```git clone https://github.com/laitathei/Gazebo-rosserial-rescue-robot``` 
 * The XML files will mix up with JPEG files in the same directory. Please seperate into two holder which are Annotations and JPEGImages. 
 * Annotations will store the XML files and JPEGImages will store the JPEG file
 * For the tutorial of using labelImg, please refer to https://github.com/tzutalin/labelImg
+* 
 ### 3.2 Generate train.txt file with bounding box XY coordinate
+Before running the python script, please change the path with your own path
 1. Using ```voc2yolov4.py``` to shuffle the dataset into different data such as train, test, validation
 2. Using ```voc_annotation.py``` to generate text file with with bounding box XY coordinate base on ImageSets text file information
+If you have more than one object have been labelled, please add it into voc_annotation.py `classes = ["xx", "xx"]`
+Also, add the class name into ```model_data/voc_classes.txt```with same order
 
 The final dataset structure:
 ```
-workspace
+--workspace
           --VOCdevkit
                       --VOC2007
                                 --Annotations
@@ -67,3 +71,14 @@ workspace
                                 --JPEGImages
 ```
 ### 3.3 Config hyperparameters (optional)
+In train.py, you can change:
+* cuda (True/False)
+* normalize (True/False)
+* input_shape
+* mosaic (True/False)
+* cosine_scheduler (True/False)
+* label_smoothing
+* learning rate
+* batch_size
+* Init_Epoch
+* Freeze_Epoch
