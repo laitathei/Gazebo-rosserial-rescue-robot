@@ -1,4 +1,3 @@
-# coding=UTF-8
 import torch
 import torch.nn as nn
 import math
@@ -26,7 +25,7 @@ class ChannelAttention(nn.Module):
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.max_pool = nn.AdaptiveMaxPool2d(1)
 
-        # 利用1x1卷积代替全连接
+        # Use 1x1 convolution instead of full connection
         self.fc1   = nn.Conv2d(in_planes, in_planes // ratio, 1, bias=False)
         self.relu1 = nn.ReLU()
         self.fc2   = nn.Conv2d(in_planes // ratio, in_planes, 1, bias=False)
