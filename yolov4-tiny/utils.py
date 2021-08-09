@@ -1,4 +1,3 @@
-# coding=UTF-8
 import numpy as np
 import torch
 import torch.nn as nn
@@ -17,7 +16,7 @@ class DecodeBox(nn.Module):
 
     def forward(self, input):
         #-----------------------------------------------#
-        #   输入的input一共有两个，他们的shape分别是
+        #   There are two input inputs, and their shapes are respectively
         #   batch_size, 255, 13, 13
         #   batch_size, 255, 26, 26
         #-----------------------------------------------#
@@ -26,40 +25,40 @@ class DecodeBox(nn.Module):
         input_width = input.size(3)
 
         #-----------------------------------------------#
-        #   输入为416x416时
+        #    when the input is 416x416
         #   stride_h = stride_w = 32、16
         #-----------------------------------------------#
         stride_h = self.img_size[1] / input_height
         stride_w = self.img_size[0] / input_width
         #-------------------------------------------------#
-        #   此时获得的scaled_anchors大小是相对于特征层的
+        #   The size of scaled_anchors obtained at this time is relative to the feature layer
         #-------------------------------------------------#
         scaled_anchors = [(anchor_width / stride_w, anchor_height / stride_h) for anchor_width, anchor_height in self.anchors]
 
         #-----------------------------------------------#
-        #   输入的input一共有两个，他们的shape分别是
+        #   There are two input inputs, and their shapes are respectively
         #   batch_size, 3, 13, 13, 85
         #   batch_size, 3, 26, 26, 85
         #-----------------------------------------------#
         prediction = input.view(batch_size, self.num_anchors,
                                 self.bbox_attrs, input_height, input_width).permute(0, 1, 3, 4, 2).contiguous()
 
-        # 先验框的中心位置的调整参数
+        # Adjustment parameters for the center position of the a priori box
         x = torch.sigmoid(prediction[..., 0])  
         y = torch.sigmoid(prediction[..., 1])
-        # 先验框的宽高调整参数
+        # The width and height adjustment parameters of the a priori box
         w = prediction[..., 2]
         h = prediction[..., 3]
-        # 获得置信度，是否有物体
+        #  get the validation to check object exist or not
         conf = torch.sigmoid(prediction[..., 4])
-        # 种类置信度
+        #  get the class validation
         pred_cls = torch.sigmoid(prediction[..., 5:])
 
         FloatTensor = torch.cuda.FloatTensor if x.is_cuda else torch.FloatTensor
         LongTensor = torch.cuda.LongTensor if x.is_cuda else torch.LongTensor
 
         #----------------------------------------------------------#
-        #   生成网格，先验框中心，网格左上角 
+        #   Generate grid, a priori box center, upper left corner of the grid
         #   batch_size,3,13,13
         #----------------------------------------------------------#
         grid_x = torch.linspace(0, input_width - 1, input_width).repeat(input_height, 1).repeat(
@@ -68,7 +67,7 @@ class DecodeBox(nn.Module):
             batch_size * self.num_anchors, 1, 1).view(y.shape).type(FloatTensor)
 
         #----------------------------------------------------------#
-        #   按照网格格式生成先验框的宽高
+        #   Generate the width and height of the a priori box according to the grid format
         #   batch_size,3,13,13
         #----------------------------------------------------------#
         anchor_w = FloatTensor(scaled_anchors).index_select(1, LongTensor([0]))
@@ -77,9 +76,9 @@ class DecodeBox(nn.Module):
         anchor_h = anchor_h.repeat(batch_size, 1).repeat(1, 1, input_height * input_width).view(h.shape)
 
         #----------------------------------------------------------#
-        #   利用预测结果对先验框进行调整
-        #   首先调整先验框的中心，从先验框中心向右下角偏移
-        #   再调整先验框的宽高。
+        #   Use the prediction results to adjust the prior box
+        #   First adjust the center of the a priori box, offset from the center of the a priori box to the lower right corner
+        #   Then adjust the width and height of the a priori box.
         #----------------------------------------------------------#
         pred_boxes = FloatTensor(prediction[..., :4].shape)
         pred_boxes[..., 0] = x.data + grid_x
@@ -138,7 +137,7 @@ class DecodeBox(nn.Module):
         # plt.show()
 
         #----------------------------------------------------------#
-        #   将输出结果调整成相对于输入图像大小
+        #   Adjust the output result to be relative to the input image size
         #----------------------------------------------------------#
         _scale = torch.Tensor([stride_w, stride_h] * 2).type(FloatTensor)
         output = torch.cat((pred_boxes.view(batch_size, -1, 4) * _scale,
@@ -211,7 +210,7 @@ def bbox_iou(box1, box2, x1y1x2y2=True):
 
 def non_max_suppression(prediction, num_classes, conf_thres=0.5, nms_thres=0.4):
     #----------------------------------------------------------#
-    #   将预测结果的格式转换成左上角右下角的格式。
+    #   Convert the format of the prediction result to the format in the upper left corner and lower right corner.
     #   prediction  [batch_size, num_anchors, 85]
     #----------------------------------------------------------#
     box_corner = prediction.new(prediction.shape)
@@ -224,19 +223,19 @@ def non_max_suppression(prediction, num_classes, conf_thres=0.5, nms_thres=0.4):
     output = [None for _ in range(len(prediction))]
     for image_i, image_pred in enumerate(prediction):
         #----------------------------------------------------------#
-        #   对种类预测部分取max。
-        #   class_conf  [num_anchors, 1]    种类置信度
-        #   class_pred  [num_anchors, 1]    种类
+        #   Take max for the class prediction part.
+        #   class_conf  [num_anchors, 1]
+        #   class_pred  [num_anchors, 1]
         #----------------------------------------------------------#
         class_conf, class_pred = torch.max(image_pred[:, 5:5 + num_classes], 1, keepdim=True)
 
         #----------------------------------------------------------#
-        #   利用置信度进行第一轮筛选
+        #   Use confidence for the first round of screening
         #----------------------------------------------------------#
         conf_mask = (image_pred[:, 4] * class_conf[:, 0] >= conf_thres).squeeze()
 
         #----------------------------------------------------------#
-        #   根据置信度进行预测结果的筛选
+        #   Screen prediction results based on confidence
         #----------------------------------------------------------#
         image_pred = image_pred[conf_mask]
         class_conf = class_conf[conf_mask]
@@ -245,12 +244,12 @@ def non_max_suppression(prediction, num_classes, conf_thres=0.5, nms_thres=0.4):
             continue
         #-------------------------------------------------------------------------#
         #   detections  [num_anchors, 7]
-        #   7的内容为：x1, y1, x2, y2, obj_conf, class_conf, class_pred
+        #   x1, y1, x2, y2, obj_conf, class_conf, class_pred
         #-------------------------------------------------------------------------#
         detections = torch.cat((image_pred[:, :5], class_conf.float(), class_pred.float()), 1)
 
         #------------------------------------------#
-        #   获得预测结果中包含的所有种类
+        #   Get all the class included in the prediction results
         #------------------------------------------#
         unique_labels = detections[:, -1].cpu().unique()
 
@@ -260,12 +259,12 @@ def non_max_suppression(prediction, num_classes, conf_thres=0.5, nms_thres=0.4):
 
         for c in unique_labels:
             #------------------------------------------#
-            #   获得某一类得分筛选后全部的预测结果
+            #   Obtain all the prediction results after a certain class of score screening
             #------------------------------------------#
             detections_class = detections[detections[:, -1] == c]
 
             #------------------------------------------#
-            #   使用官方自带的非极大抑制会速度更快一些！
+            #   Using the official non-maximum suppression will be faster!
             #------------------------------------------#
             keep = nms(
                 detections_class[:, :4],
@@ -274,20 +273,6 @@ def non_max_suppression(prediction, num_classes, conf_thres=0.5, nms_thres=0.4):
             )
             max_detections = detections_class[keep]
             
-            # # 按照存在物体的置信度排序
-            # _, conf_sort_index = torch.sort(detections_class[:, 4]*detections_class[:, 5], descending=True)
-            # detections_class = detections_class[conf_sort_index]
-            # # 进行非极大抑制
-            # max_detections = []
-            # while detections_class.size(0):
-            #     # 取出这一类置信度最高的，一步一步往下判断，判断重合程度是否大于nms_thres，如果是则去除掉
-            #     max_detections.append(detections_class[0].unsqueeze(0))
-            #     if len(detections_class) == 1:
-            #         break
-            #     ious = bbox_iou(max_detections[-1], detections_class[1:])
-            #     detections_class = detections_class[1:][ious < nms_thres]
-            # # 堆叠
-            # max_detections = torch.cat(max_detections).data
             
             # Add max detections to outputs
             output[image_i] = max_detections if output[image_i] is None else torch.cat(
