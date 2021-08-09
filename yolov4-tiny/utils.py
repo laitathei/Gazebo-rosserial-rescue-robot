@@ -26,7 +26,7 @@ class DecodeBox(nn.Module):
 
         #-----------------------------------------------#
         #    when the input is 416x416
-        #   stride_h = stride_w = 32、16
+        #   stride_h = stride_w = 32    16
         #-----------------------------------------------#
         stride_h = self.img_size[1] / input_height
         stride_w = self.img_size[0] / input_width
@@ -181,7 +181,7 @@ def yolo_correct_boxes(top, left, bottom, right, input_shape, image_shape):
 
 def bbox_iou(box1, box2, x1y1x2y2=True):
     """
-        计算IOU
+        calculate IOU
     """
     if not x1y1x2y2:
         b1_x1, b1_x2 = box1[:, 0] - box1[:, 2] / 2, box1[:, 0] + box1[:, 2] / 2
