@@ -4,7 +4,9 @@
 ### 1.1 Find out the host IP address
 Type ```ifconifg``` in command line for both master and slave host
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ifconfig.png)
-### 1.2 Change the bashrc file configuration
+### 1.2 Find out the host name
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/hostname.png)
+### 1.3 Change the bashrc file configuration
 Open new terminal and type ```sudo gedit .bashrc```in command line to open bashrc file
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/open_bashrc.png)
 
@@ -18,7 +20,7 @@ Demo picture for master bashrc file:
 * Add/Change the ROS_MASTER_URI with master IP address such as```http://192.168.1.1:11311```
 * Add/Change the ROS_IP with master IP address such as ```ROS_IP=192.168.1.1```
 
-### 1.3 Change the host file configuration
+### 1.4 Change the host file configuration
 Open new terminal and type following command to change host file setting
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/open_hosts.png)
 
@@ -32,7 +34,7 @@ Demo picture for master host file:
 * Add/Change the master IP address with slave host name such as ```192.168.1.2    slave_host_name```
 * Add/Change the slave IP address with master host name such as ```192.168.1.1    master_host_name```
 
-### 1.4 Connect master and slave host with Lan connection and type ```source ~/.bashrc```
+### 1.5 Connect master and slave host with Lan connection and type ```source ~/.bashrc```
 
 ### 2 YOLO installation
 ### 2.1 Python2.7 Package preparation before using YOLOv4-tiny
