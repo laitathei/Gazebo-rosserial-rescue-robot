@@ -1,4 +1,3 @@
-# coding=UTF-8
 import torch
 import torch.nn as nn
 
@@ -8,7 +7,6 @@ from attention import cbam_block, eca_block, se_block
 attention_block = [se_block, cbam_block, eca_block]
 
 #-------------------------------------------------#
-#   卷积块 -> 卷积 + 标准化 + 激活函数
 #   Conv2d + BatchNormalization + LeakyReLU
 #-------------------------------------------------#
 class BasicConv(nn.Module):
@@ -26,7 +24,7 @@ class BasicConv(nn.Module):
         return x
 
 #---------------------------------------------------#
-#   卷积 + 上采样
+#  convolution + upsample
 #---------------------------------------------------#
 class Upsample(nn.Module):
     def __init__(self, in_channels, out_channels):
@@ -42,7 +40,7 @@ class Upsample(nn.Module):
         return x
 
 #---------------------------------------------------#
-#   最后获得yolov4的输出
+#   get the output of yolov4
 #---------------------------------------------------#
 def yolo_head(filters_list, in_filters):
     m = nn.Sequential(
@@ -76,9 +74,9 @@ class YoloBody(nn.Module):
 
     def forward(self, x):
         #---------------------------------------------------#
-        #   生成CSPdarknet53_tiny的主干模型
-        #   feat1的shape为26,26,256
-        #   feat2的shape为13,13,512
+        #   got the CSPdarknet53_tiny backbone model
+        #   feat1 shape is 26,26,256
+        #   feat2 shape is 13,13,512
         #---------------------------------------------------#
         feat1, feat2 = self.backbone(x)
         if 1 <= self.phi and self.phi <= 3:
