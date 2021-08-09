@@ -4,9 +4,11 @@
 ### 1.1 Find out the host IP address
 Type ```ifconifg``` in command line for both master and slave host
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ifconfig.png)
+
 ### 1.2 Find out the host name
 Type ```hostname``` in command line
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/hostname.png)
+
 ### 1.3 Change the bashrc file configuration
 Open new terminal and type ```sudo gedit .bashrc```in command line to open bashrc file
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/open_bashrc.png)
