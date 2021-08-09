@@ -108,7 +108,7 @@ class CSPDarkNet(nn.Module):
         self.conv3 = BasicConv(512, 512, kernel_size=3)
 
         self.num_features = 1
-        # 进行权值初始化
+        # init the weighting
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
