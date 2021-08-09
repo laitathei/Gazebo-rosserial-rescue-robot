@@ -32,7 +32,7 @@ Demo picture for master host file:
 * Add/Change the master IP address with master host name such as ```192.168.1.2    master_host_name```
 * Add/Change the slave IP address with slave host name such as ```192.168.1.1    slave_host_name```
 
-### 1.4 Connect master and slave host with Lan connection
+### 1.4 Connect master and slave host with Lan connection and type ```source ~/.bashrc```
 
 ### 2 YOLO installation
 ### 2.1 Python2.7 Package preparation before using YOLOv4-tiny
