@@ -10,8 +10,8 @@ Open new terminal and type ```sudo gedit .bashrc```in command line to open bashr
 
 Demo picture for slave bashrc file:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/slaver_bashrc.png)
-* Add/Change the ROS_MASTER_URI with slave IP address such as```http://192.168.1.1:11311```
-* Add/Change the ROS_IP with master IP address such as ```ROS_IP=192.168.1.2```
+* Add/Change the ROS_MASTER_URI with master IP address such as```http://192.168.1.1:11311```
+* Add/Change the ROS_IP with slave IP address such as ```ROS_IP=192.168.1.2```
 
 Demo picture for master bashrc file:
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/master_bashrc.png)
@@ -103,6 +103,9 @@ In train.py, you can change:
 Please change the model path to your own model path
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/yolo_load_path.png)
 ### 4.2 Get the class label, scores and boundary boxes XY coordinates
+* ```top_conf``` means the detected confidence level and the type is numpy.ndarray
+* ```top_label```means the detected class and the type is numpy.ndarray
+* ```boxes```means the XY coordinates of boundary boxes from detected class and the type is numpy.ndarray
 Class label have the constant order which means the class label generated from detection also have constant order
 For example, this is the my defined class in ```model_data/voc_classes.txt```
 ```
@@ -111,9 +114,8 @@ turn_right
 ```
 turn_left and turn_right will have an assumed index. The first class will have index 0 to refer to this class and the second class will have index 1.
 more class that you have, higher index will provided to refer the class
-* ```top_conf``` means the detected confidence level
-* ```top_label```means the detected class
-* ```boxes```means the XY coordinates of boundary boxes from detected class
+If multi object detected in a single image, the ```top_conf``` will become ```[0 1 2 3...]```
+According to the index for each class, we can easily to find out the class have been detected in the image
 ```
         global turn_left
         global turn_right
@@ -175,5 +177,5 @@ more class that you have, higher index will provided to refer the class
         transfer_top_xmax=detection_top_xmax
         return left, right,transfer_score,transfer_top_ymin,transfer_top_xmin,transfer_top_ymax,transfer_top_xmax
 ```
-* Base on this two class example ```in yolo.py```, more than two class can be further develop
+* Base on this two class example in```yolo.py```, more than two class can be further develop
 * The detection_result function will store the required variable and just need to call it via ```yolo.detection_result```
