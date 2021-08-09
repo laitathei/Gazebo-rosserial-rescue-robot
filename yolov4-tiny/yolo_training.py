@@ -168,9 +168,9 @@ class YOLOLoss(nn.Module):
         prediction = input.view(bs, int(self.num_anchors/2),
                                 self.bbox_attrs, in_h, in_w).permute(0, 1, 3, 4, 2).contiguous()
         
-        #  get the validation to see whether detected object
+        #  get the confidence to see whether detected object
         conf = torch.sigmoid(prediction[..., 4])
-        #  class validation
+        #  class confidence
         pred_cls = torch.sigmoid(prediction[..., 5:])
 
         #---------------------------------------------------------------#
@@ -179,8 +179,8 @@ class YOLOLoss(nn.Module):
         #   mask        batch_size, 3, in_h, in_w    feature point with object
         #   noobj_mask  batch_size, 3, in_h, in_w    feature point without object
         #   t_box       batch_size, 3, in_h, in_w, 4    ground truth of the width and height in the center
-        #   tconf       batch_size, 3, in_h, in_w    ground truth of validation
-        #   tcls        batch_size, 3, in_h, in_w, num_classes   ground truth of class validation
+        #   tconf       batch_size, 3, in_h, in_w    ground truth of confidence
+        #   tcls        batch_size, 3, in_h, in_w, num_classes   ground truth of class confidence
         #----------------------------------------------------------------#
         mask, noobj_mask, t_box, tconf, tcls, box_loss_scale_x, box_loss_scale_y = self.get_target(targets, scaled_anchors,in_w, in_h,self.ignore_threshold)
 
@@ -332,11 +332,11 @@ class YOLOLoss(nn.Module):
                     box_loss_scale_x[b, best_n, gj, gi] = target[b][i, 2]
                     box_loss_scale_y[b, best_n, gj, gi] = target[b][i, 3]
                     #----------------------------------------#
-                    #   tconf represent the object validation
+                    #   tconf represent the object confidence
                     #----------------------------------------#
                     tconf[b, best_n, gj, gi] = 1
                     #----------------------------------------#
-                    #   tcls represent the class validation
+                    #   tcls represent the class confidence
                     #----------------------------------------#
                     tcls[b, best_n, gj, gi, target[b][i, 4].long()] = 1
                 else:
