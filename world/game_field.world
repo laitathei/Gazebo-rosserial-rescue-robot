@@ -840,7 +840,7 @@
       </link>
       <static>1</static>
     </model>
-    <model name='stop_light_1'>
+    <model name='stop_light_red'>
       <static>1</static>
       <pose frame=''>-1.77781 4.31777 1 0 -0 0</pose>
       <link name='link'>
