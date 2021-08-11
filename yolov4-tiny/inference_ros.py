@@ -60,17 +60,19 @@ class object_detect:
         self.fps = 0.0
         while(True):
             self.t1 = time.time()
-            # get the frame
+            # Read a frame
             # frame is ndarray
-            # convert to image
+            # convert into Image
             self.frame = PIL_Image.fromarray(np.uint8(self.img))
-            # start to detect
+            # perform detection
             self.frame = np.array(self.yolo.detect_image(self.frame))
             # get the detection result
-            self.left, self.right = self.yolo.detection_result()
+            self.left, self.right, self.detection_score ,self.detection_top_ymin,self.detection_top_xmin,self.detection_top_ymax,self.detection_top_xmax= self.yolo.detection_result()
             print ("Turn left : {}".format(self.left))
             print ("Turn right : {}".format(self.right))
-            # RGBtoBGR
+            print ("Score : {}".format(self.detection_score))
+            print ("ymin:{},xmin:{},ymax:{},xmax:{}".format(self.detection_top_ymin,self.detection_top_xmin,self.detection_top_ymax,self.detection_top_xmax))
+            # convert from RGB to BGR to fulfil the opencv format
             self.frame = cv2.cvtColor(self.frame,cv2.COLOR_RGB2BGR)
 
             self.fps  = ( self.fps + (1./(time.time()-self.t1)) ) / 2
