@@ -186,7 +186,7 @@ According to the index for each class, we can easily to find out the class have 
 * Base on this two class example in```yolo.py```, more than two class can be further develop
 * The detection_result function will store the required variable and just need to call it via ```yolo.detection_result```
 ### 4.2 YOLO inferencing
-Type ```python2.7 inference_ros.py``` to inferencing
-The subscriber will keep listening ```'/robot/camera1/image_raw'``` this topic
-Change this camera topic to other camera if you want
+* Type ```python2.7 inference_ros.py``` to inferencing
+* The subscriber will keep listening ```'/robot/camera1/image_raw'``` this topic
+* Change this camera topic to other camera if you want
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/inference.png)
