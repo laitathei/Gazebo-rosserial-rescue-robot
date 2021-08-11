@@ -8,7 +8,7 @@ cd ~; git clone https://github.com/osrf/gzweb
 cd ~/gzweb
 git checkout gzweb_1.4.1
 source /usr/share/gazebo/setup.sh
-npm run deploy --- -m local # only load the local model
+npm run deploy --- -m local
 npm update minimatch@3.0.2
 npm update -d
 npm i ajv
