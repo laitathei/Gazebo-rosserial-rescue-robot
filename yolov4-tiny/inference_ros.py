@@ -60,17 +60,17 @@ class object_detect:
         self.fps = 0.0
         while(True):
             self.t1 = time.time()
-            # 读取某一帧
+            # get the frame
             # frame is ndarray
-            # 转变成Image
+            # convert to image
             self.frame = PIL_Image.fromarray(np.uint8(self.img))
-            # 进行检测
+            # start to detect
             self.frame = np.array(self.yolo.detect_image(self.frame))
             # get the detection result
             self.left, self.right = self.yolo.detection_result()
             print ("Turn left : {}".format(self.left))
             print ("Turn right : {}".format(self.right))
-            # RGBtoBGR满足opencv显示格式
+            # RGBtoBGR
             self.frame = cv2.cvtColor(self.frame,cv2.COLOR_RGB2BGR)
 
             self.fps  = ( self.fps + (1./(time.time()-self.t1)) ) / 2
