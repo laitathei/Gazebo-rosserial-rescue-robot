@@ -168,4 +168,13 @@ Remember to open your gazebo world first
 cd ~/gzweb/
 npm start
 ```
-Open thr browser and type ```https:your_current_ip_address:8080```
+Open thr browser and type ```https://your_current_ip_address:8080```
+
+### 5 Network setting
+### 5.1 Network connection
+* The master device and the slave device will connect with local lan to have high speed data transmission rate
+* As Web service included in this subject, both master and slave device required to have their own IP address
+* Router will be used for connect the internet and other device will connect to router with DHCP policy
+* Remember to configure the router setting first
+* Base on DHCP policy, all the connected device got their own IP address
+* These IP address can implement in ROS master URI (Please view the README:https://github.com/laitathei/Gazebo-rosserial-rescue-robot/tree/main/yolov4-tiny)
