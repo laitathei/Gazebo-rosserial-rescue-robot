@@ -162,3 +162,10 @@ npm audit fix
 npm audit fix --force
 npm run deploy --- -m local
 ```
+### 4.2 Turn on Gazebo Web (synchronized with Gazebo)
+Remember to open your gazebo world first
+```
+cd ~/gzweb/
+npm start
+```
+Open thr browser and type ```https:your_current_ip_address:8080```
