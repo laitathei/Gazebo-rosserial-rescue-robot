@@ -570,6 +570,24 @@
             <specular>1 1 0 1</specular>
           </material>
         </visual>
+        <collision name='green_collision'>
+          <pose frame=''>-0.001123 -0.082251 -0.655 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>Gazebo/Grass</name>
+            </script>
+            <ambient>0 1 0 1</ambient>
+            <specular>0 1 0 1</specular>
+            <emissive>0 1 0 1</emissive>
+          </material>
+        </collision>
         <visual name='green'>
           <pose frame=''>-0.001123 -0.082251 -0.655 0 -0 0</pose>
           <geometry>
@@ -581,7 +599,7 @@
             <script>
             <uri>model://stop_light/materials/scripts/</uri>
             <uri>model://stop_light/materials/textures/</uri>
-              <name>StopLight/Light</name>
+              <name>Gazebo/Grass</name>
             </script>
             <ambient>0 1 0 1</ambient>
             <specular>0 1 0 1</specular>
@@ -880,6 +898,25 @@
             </mesh>
           </geometry>
         </visual>
+        <collision name='red_collision'>
+          <pose frame=''>-0.001123 -0.082251 -0.147514 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>Gazebo/PioneerBody</name>
+            </script>
+            <ambient>1 0 0 1</ambient>
+            <specular>1 0 0 1</specular>
+            <!-- Turn a light on by uncommenting emissive -->
+            <emissive>1 0 0 1</emissive>
+          </material>
+        </collision>
         <visual name='red'>
           <pose frame=''>-0.001123 -0.082251 -0.147514 0 -0 0</pose>
           <geometry>
@@ -891,7 +928,7 @@
             <script>
             <uri>model://stop_light_red/materials/scripts/</uri>
             <uri>model://stop_light_red/materials/textures/</uri>
-              <name>StopLight/Light</name>
+              <name>Gazebo/PioneerBody</name>
             </script>
             <ambient>1 0 0 1</ambient>
             <specular>1 0 0 1</specular>
