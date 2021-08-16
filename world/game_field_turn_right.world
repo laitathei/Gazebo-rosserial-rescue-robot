@@ -44,20 +44,20 @@
       <wall_time>1598835762 256276203</wall_time>
       <iterations>5898</iterations>
       <model name='stop_light_green'>
-        <pose frame=''>0.216 4.516 0.8 0 -0 0</pose>
+        <pose frame=''>0.146 4.516 0.8 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>0.216 4.516 0.8 0 -0 0</pose>
+          <pose frame=''>0.146 4.516 0.8 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='stop_light_red'>
-        <pose frame=''>-0.216 4.516 0.8 0 -0 0</pose>
+        <pose frame=''>-0.146 4.516 0.8 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-0.216 4.516 0.8 0 -0 0</pose>
+          <pose frame=''>-0.146 4.516 0.8 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
