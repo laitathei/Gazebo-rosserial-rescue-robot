@@ -13,11 +13,11 @@
 
 ### 1.3 Startup Procedures
 1. Use Arduino IDE to upload control_WithEncode_new.ino to Arduino Mega: This file will provide the encoder value and allow user to change PWM via keyboard
-2. roslaunch virtualrobotv2 gazebo.launch: This file will simulate the game_field and the robot
-3. rosrun rosserial_python serial_node.py /dev/ttyACM0: This file will connect the real world robot and allow them synchronized
-4. rosrun virtualrobotv2 teleop_twist_keyboard.py: This file will control the real world robot movement such as forward and backward
-5. rosrun virtualrobotv2 Encoder_to_odom_final_version.py: This file will translate the encoder value to odometry message
-6. rosrun virtualrobotv2 Encoder_to_odom_back_to_origin.py: This file allow to put the simulated car into the original position
+2. ```roslaunch virtualrobotv2 gazebo.launch```: This file will simulate the game_field and the robot
+3. ```rosrun rosserial_python serial_node.py /dev/ttyACM0```: This file will connect the real world robot and allow them synchronized
+4. ```rosrun virtualrobotv2 teleop_twist_keyboard.py```: This file will control the real world robot movement such as forward and backward
+5. ```rosrun virtualrobotv2 Encoder_to_odom_final_version.py```: This file will translate the encoder value to odometry message
+6. ```rosrun virtualrobotv2 Encoder_to_odom_back_to_origin.py```: This file allow to put the simulated car into the original position
 
 ### 2.1 Program Explaination
 ### 2.1.1 Gazebo.launch
@@ -139,6 +139,15 @@ Enter a choice:
 * First, check whether you have turn on any ROS program such as rosrun rosserial_python serial_node.py /dev/ttyACM0
 * Second, upload Arduino program again while closed all the ROS program
 * Remeber! ROS and Arduino cannot run both at the same time. Please make sure that turn off another when you want to upload or open program
+
+### 3.1.4 Color problem
+* If you want to have different color for the static model in Gazebo or Gazebo Web
+* Please refer to the gazebo.material which included different material and color
+* Remember, the visual effect of the color are different for Gazebo and Gazebo Web
+* Please try to use the color that start with Gazebo such as ```material Gazebo/Red```
+* Copy the desired material type from gazebo.material to your model material file
+* Type the following script into your model.sdf file and change ```<script>...<script/>``` content with your own information
+![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/change_color.png)
 
 ### 4 Gazebo Web
 ### 4.1 Installation
