@@ -94,4 +94,7 @@ class object_detect:
 if __name__ == "__main__":
     detect = object_detect()
     while not rospy.is_shutdown():
-        detect.image_detect()
+        try:
+            detect.image_detect()
+        except:
+            print ("Reloading")
