@@ -5,6 +5,7 @@
 2. ROS melodic
 3. Gazebo 9
 4. Python 2.7
+5. Jetpack 4.4.1
 
 ### 1.2 Hardware Requirement
 1. Arduino Mega
