@@ -39,6 +39,7 @@ Demo picture for master host file:
 * Add/Change the slave IP address with master host name such as ```192.168.1.1    master_host_name```
 
 ### 1.5 Connect master and slave host with Lan connection and type ```source ~/.bashrc```
+### Friendly reminder for ros master setting, don't turn on roscore in slave otherwise it will error
 
 ### 2 YOLO installation
 ### 2.1 Python2.7 Package preparation before using YOLOv4-tiny
