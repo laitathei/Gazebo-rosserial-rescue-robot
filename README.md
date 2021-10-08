@@ -109,7 +109,7 @@ Please place the cursor to this window before refresh the car position!
 9. Exit
 Enter a choice:
 ```
-* The objective of this program is reducing the time of reopen gazebo.launch file when the simulated robot finished its mission or make some mistake while moving the robot
+* The objective of this program is reducing the time of reopen gazebo_turn_left.launch file when the simulated robot finished its mission or make some mistake while moving the robot
 * When typing 1 to 8 into the command line, the simulated robot will back to the original position with different orientation
 * When typing 9 into the command line, it will leave the program
 
@@ -132,7 +132,7 @@ Enter a choice:
 ### 3.1.2 ROS problem 2
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/ROS_problem2.png)
 * First, open a new command line and type `roscore`
-* Second, open a new command line again and type `roslaunch virtualrobotv2 gazebo.launch`
+* Second, open a new command line again and type `roslaunch virtualrobotv2 gazebo_turn_left.launch`
 * Third, open these files again and the problem should be solved
 
 ### 3.1.3 Arduino problem
