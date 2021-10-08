@@ -21,7 +21,7 @@
 6. ```rosrun virtualrobotv2 Encoder_to_odom_back_to_origin.py```: This file allow to put the simulated car into the original position
 
 ### 2.1 Program Explaination
-### 2.1.1 Gazebo.launch
+### 2.1.1 gazebo_turn_left.launch
 ![image](https://github.com/laitathei/Gazebo-rosserial-rescue-robot/blob/main/photo/demo_game_field.png)
 * `<?xml version="1.0" encoding="UTF-8"?>`Specify that it is an XML file
 * `<launch>...</launch>`Specify that it is an launch file and all the code should be inside this tag
