@@ -14,7 +14,7 @@
 
 ### 1.3 Startup Procedures
 1. Use Arduino IDE to upload control_WithEncode_new.ino to Arduino Mega: This file will provide the encoder value and allow user to change PWM via keyboard
-2. ```roslaunch virtualrobotv2 gazebo.launch```: This file will simulate the game_field and the robot
+2. ```roslaunch virtualrobotv2 gazebo_turn_left.launch```: This file will simulate the game_field and the robot for turn left, choose ```gazebo_turn_right.launch``` for turn right
 3. ```rosrun rosserial_python serial_node.py /dev/ttyACM0```: This file will connect the real world robot and allow them synchronized
 4. ```rosrun virtualrobotv2 teleop_twist_keyboard.py```: This file will control the real world robot movement such as forward and backward
 5. ```rosrun virtualrobotv2 Encoder_to_odom_final_version.py```: This file will translate the encoder value to odometry message
