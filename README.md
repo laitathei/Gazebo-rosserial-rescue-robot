@@ -174,6 +174,7 @@ npm run deploy --- -m local
 ```
 ### 4.2 Turn on Gazebo Web (synchronized with Gazebo)
 Remember to open your gazebo world first
+You can choose no_gui_version or not, the no_gui_version just for more option
 ```
 cd ~/gzweb/
 npm start
